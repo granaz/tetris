@@ -1,0 +1,21 @@
+#content {
+    width: 600px;
+    margin: 0 auto;
+    background-color: lightgrey;
+    padding: 50px 0;
+}
+
+#area {
+    width: 300px;
+    height: 600px;
+    margin: 0 auto;
+    background-color: grey;
+}
+
+.block {
+    width: 28px;
+    height: 28px;
+    display: block;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    float: left;
+}
