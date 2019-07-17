@@ -18,6 +18,17 @@
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 <script src="js/main.js"></script>
+<script src="js/elements.js"></script>
 <link rel="stylesheet" href="css/main.css">
+
+<script>
+    $(window).ready(function() {
+        $(document).keydown((key) => {
+            if (key.keyCode === keySpace && gameState === false) {
+                startGame();
+            }
+        })
+    });
+</script>
 
 </html>
