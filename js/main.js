@@ -12,7 +12,7 @@ let gameState = false;
 const configs = {
   level: 1,
   points: 0,
-  tileSpeed: 500,
+  tileSpeed: 1000,
 }
 
 const startGame = () => {

@@ -2,33 +2,38 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tetris</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Tetris</title>
 </head>
 
 <body>
 
-    <section id="content">
-        <div id="area">
-        </div>
-    </section>
+  <section id="content">
+    <div id="area">
+    </div>
+  </section>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 <script src="js/main.js"></script>
 <script src="js/elements.js"></script>
+<script src="js/commands.js"></script>
 <link rel="stylesheet" href="css/main.css">
 
 <script>
-    $(window).ready(function() {
-        $(document).keydown((key) => {
-            if (key.keyCode === keySpace && gameState === false) {
-                startGame();
-            }
-        })
+  $(window).ready(function () {
+    $(document).keydown((key) => {
+      if (key.keyCode === keySpace && gameState === false) {
+        startGame();
+      }
+
+      if (key.keyCode === 39) {
+        elementToTheRight();
+      }
     });
+  });
 </script>
 
 </html>

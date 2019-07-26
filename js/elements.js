@@ -15,32 +15,49 @@ const renderBoard = () => {
  */
 const startDropTiles = () => {
   const formats = ['I', 'O', 'T', 'S', 'Z', 'J', 'L'];
-  const colors = ['red', 'blue', 'yellow', 'green'];
+  const colors = ['red', 'turquoise', 'yellow', 'green'];
 
-  dropTile("I", 'red');
+  createElement("I", colors[Math.floor(Math.random()*4)], startFalling);
 }
 
-const dropTile = (format, color) => {
-  createElement(format, color);
-
-  setInterval(() => {
-    
-  }, configs.tileSpeed);
-}
-
-const createElement = (format, color) => {  
+const createElement = (format, color, callback = null) => {
   switch (format) {
     case "I":
-      const positions = [3,4,5,6];
+      const positions = [3, 4, 5, 6];
 
       positions.forEach((each) => {
-        $("#block"+each).addClass("tetrominoActive");
-        $("#block"+each).css("background-color", color);
+        renderElement(each, color);
       });
 
+      // initiate callback
+      if (callback !== null) callback(positions, color);
+
       break;
-  
+
     default:
       break;
   }
+}
+
+const startFalling = (positions, color) => {
+  let newPos = [...positions];
+
+  setInterval(() => {
+    clearActiveTetromino();
+
+    newPos = newPos.map(x => x + 10);
+
+    newPos.forEach((each) => {
+      renderElement(each, color);
+    });
+  }, configs.tileSpeed);
+}
+
+const renderElement = (elem, color) => {
+  $("#block" + elem).addClass("tetrominoActive");
+  $("#block" + elem).css("background-color", color);
+}
+
+const clearActiveTetromino = () => {
+  $(".tetrominoActive").css("background-color", "");
 }
