@@ -9,10 +9,18 @@ const keySpace = 32;
 
 let gameState = false;
 
+let currentElement = {
+  position: [],
+  falling: false,
+  active: false,
+  color: "",
+  type: ""
+};
+
 const configs = {
   level: 1,
   points: 0,
-  tileSpeed: 1000,
+  tileSpeed: 750,
 }
 
 const startGame = () => {

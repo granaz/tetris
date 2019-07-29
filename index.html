@@ -29,8 +29,12 @@
         startGame();
       }
 
-      if (key.keyCode === 39) {
+      if (key.keyCode === keyRight) {
         elementToTheRight();
+      }
+
+      if (key.keyCode === keyLeft) {
+        elementToTheLeft();
       }
     });
   });

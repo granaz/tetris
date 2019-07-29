@@ -29,8 +29,12 @@ const createElement = (format, color, callback = null) => {
         renderElement(each, color);
       });
 
+      currentElement.position = positions;
+      currentElement.color = color;
+      currentElement.active = true;
+      
       // initiate callback
-      if (callback !== null) callback(positions, color);
+      if (callback !== null) callback();
 
       break;
 
@@ -39,23 +43,23 @@ const createElement = (format, color, callback = null) => {
   }
 }
 
-const startFalling = (positions, color) => {
-  let newPos = [...positions];
+const startFalling = () => {
+  currentElement.falling = true;
 
   setInterval(() => {
-    clearActiveTetromino();
+    currentElement.position = currentElement.position.map(x => x + 10);    
 
-    newPos = newPos.map(x => x + 10);
-
-    newPos.forEach((each) => {
-      renderElement(each, color);
-    });
+    renderElement();
   }, configs.tileSpeed);
 }
 
-const renderElement = (elem, color) => {
-  $("#block" + elem).addClass("tetrominoActive");
-  $("#block" + elem).css("background-color", color);
+const renderElement = () => {
+  clearActiveTetromino();
+
+  currentElement.position.forEach((each) => {
+    $("#block" + each).addClass("tetrominoActive");
+    $("#block" + each).css("background-color", currentElement.color);
+  });
 }
 
 const clearActiveTetromino = () => {
