@@ -25,16 +25,23 @@
 <script>
   $(window).ready(function () {
     $(document).keydown((key) => {
-      if (key.keyCode === keySpace && gameState === false) {
+      console.log(key.keyCode);
+      if (key.keyCode === keyEnter && gameState === false) {
         startGame();
       }
 
-      if (key.keyCode === keyRight) {
-        elementToTheRight();
-      }
+      if (gameState) {
+        if (key.keyCode === keyRight) {
+          elementToTheRight();
+        }
 
-      if (key.keyCode === keyLeft) {
-        elementToTheLeft();
+        if (key.keyCode === keyLeft) {
+          elementToTheLeft();
+        }
+
+        if (key.keyCode === keySpace) {
+          elementSpin();
+        }
       }
     });
   });

@@ -6,6 +6,7 @@
 const keyLeft = 37;
 const keyRight = 39;
 const keySpace = 32;
+const keyEnter = 13;
 
 let gameState = false;
 
@@ -14,13 +15,14 @@ let currentElement = {
   falling: false,
   active: false,
   color: "",
-  type: ""
+  type: "",
+  orientation: 0
 };
 
 const configs = {
   level: 1,
   points: 0,
-  tileSpeed: 750,
+  tileSpeed: 250,
 }
 
 const startGame = () => {
@@ -30,5 +32,5 @@ const startGame = () => {
   renderBoard();
 
   //Start to drop the tiles
-  startDropTiles();  
+  dropTile();  
 }

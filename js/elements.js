@@ -13,26 +13,21 @@ const renderBoard = () => {
  * 
  * Each tile must be generated as soon as the predecessor hits the bottom.
  */
-const startDropTiles = () => {
+const dropTile = () => {
   const formats = ['I', 'O', 'T', 'S', 'Z', 'J', 'L'];
   const colors = ['red', 'turquoise', 'yellow', 'green'];
 
-  createElement("I", colors[Math.floor(Math.random()*4)], startFalling);
+  createElement("I", colors[Math.floor(Math.random() * 4)], startFalling);
 }
 
 const createElement = (format, color, callback = null) => {
   switch (format) {
     case "I":
-      const positions = [3, 4, 5, 6];
-
-      positions.forEach((each) => {
-        renderElement(each, color);
-      });
-
-      currentElement.position = positions;
+      currentElement.position = [3, 4, 5, 6];
       currentElement.color = color;
       currentElement.active = true;
-      
+      currentElement.type = format;
+
       // initiate callback
       if (callback !== null) callback();
 
@@ -46,10 +41,27 @@ const createElement = (format, color, callback = null) => {
 const startFalling = () => {
   currentElement.falling = true;
 
-  setInterval(() => {
-    currentElement.position = currentElement.position.map(x => x + 10);    
+  let idInterval = setInterval(() => {
+    // calculate next step;
+    let isItAble = calculateNextStep();
 
-    renderElement();
+    if (isItAble) {
+      currentElement.position = currentElement.position.map(x => x + 10);
+      renderElement();
+    } else {
+      // Clear the interval, reset the currentElement object and start to drop the next tile
+      clearInterval(idInterval);
+      currentElement.falling = false;
+      currentElement.active = false;
+      currentElement.orientation = 0;
+
+      currentElement.position.forEach((pos) => {
+        $("#block" + pos).addClass("tetrominoDeactive");
+        $(".block").removeClass("tetrominoActive");
+      })
+
+      dropTile();
+    }
   }, configs.tileSpeed);
 }
 
@@ -64,4 +76,19 @@ const renderElement = () => {
 
 const clearActiveTetromino = () => {
   $(".tetrominoActive").css("background-color", "");
+  $(".block").removeClass("tetrominoActive"); 
+}
+
+const calculateNextStep = () => {
+  let returnedValue = true;
+
+  currentElement.position.forEach((pos) => {
+    let exists = $("#block" + (pos + 10));
+
+    if (exists.length === 0) returnedValue = false;
+
+    if (exists.hasClass("tetrominoDeactive")) returnedValue = false;
+  });
+
+  return returnedValue;
 }
