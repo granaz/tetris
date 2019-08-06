@@ -25,7 +25,6 @@
 <script>
   $(window).ready(function () {
     $(document).keydown((key) => {
-      console.log(key.keyCode);
       if (key.keyCode === keyEnter && gameState === false) {
         startGame();
       }

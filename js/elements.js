@@ -14,28 +14,35 @@ const renderBoard = () => {
  * Each tile must be generated as soon as the predecessor hits the bottom.
  */
 const dropTile = () => {
-  const formats = ['I', 'O', 'T', 'S', 'Z', 'J', 'L'];
+  // 'O', 'T', 'S', 'Z', 'L'
+  const formats = ['I', 'J'];
   const colors = ['red', 'turquoise', 'yellow', 'green'];
 
-  createElement("I", colors[Math.floor(Math.random() * 4)], startFalling);
+  createElement(formats[Math.floor(Math.random() * 2)], colors[Math.floor(Math.random() * 4)], startFalling);
 }
 
 const createElement = (format, color, callback = null) => {
+  currentElement.color = color;
+  currentElement.active = true;
+  currentElement.type = format;
+
   switch (format) {
     case "I":
       currentElement.position = [3, 4, 5, 6];
-      currentElement.color = color;
-      currentElement.active = true;
-      currentElement.type = format;
 
-      // initiate callback
-      if (callback !== null) callback();
+      break;
+
+    case "J":
+      currentElement.position = [3, 13, 14, 15];
 
       break;
 
     default:
       break;
   }
+
+  // initiate callback
+  if (callback !== null) callback();
 }
 
 const startFalling = () => {
@@ -60,6 +67,7 @@ const startFalling = () => {
         $(".block").removeClass("tetrominoActive");
       })
 
+      // Start the dropping action
       dropTile();
     }
   }, configs.tileSpeed);
@@ -76,7 +84,7 @@ const renderElement = () => {
 
 const clearActiveTetromino = () => {
   $(".tetrominoActive").css("background-color", "");
-  $(".block").removeClass("tetrominoActive"); 
+  $(".block").removeClass("tetrominoActive");
 }
 
 const calculateNextStep = () => {
