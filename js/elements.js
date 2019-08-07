@@ -1,7 +1,8 @@
-'use strict'
 /**
  * Render Board, aka the ground
  */
+'use strict'
+
 const renderBoard = () => {
   for (let i = 0; i < 200; i++) {
     $("#area").append("<span id='block" + i + "' class='block'></span>")
@@ -15,25 +16,32 @@ const renderBoard = () => {
  */
 const dropTile = () => {
   // 'O', 'T', 'S', 'Z', 'L'
-  const formats = ['I', 'J'];
-  const colors = ['red', 'turquoise', 'yellow', 'green'];
+  const formats = ['I', 'J', 'L'];
 
-  createElement(formats[Math.floor(Math.random() * 2)], colors[Math.floor(Math.random() * 4)], startFalling);
+  createElement(formats[Math.floor(Math.random() * 3)]);
+  // createElement('L');
 }
 
-const createElement = (format, color, callback = null) => {
-  currentElement.color = color;
+const createElement = (format) => {  
   currentElement.active = true;
   currentElement.type = format;
 
   switch (format) {
     case "I":
       currentElement.position = [3, 4, 5, 6];
+      currentElement.color = 'turquoise';
 
       break;
 
     case "J":
       currentElement.position = [3, 13, 14, 15];
+      currentElement.color = 'blue';
+
+      break;
+
+    case "L":
+      currentElement.position = [23, 13, 14, 15];
+      currentElement.color = 'orange';
 
       break;
 
@@ -42,7 +50,7 @@ const createElement = (format, color, callback = null) => {
   }
 
   // initiate callback
-  if (callback !== null) callback();
+  startFalling();
 }
 
 const startFalling = () => {
@@ -53,7 +61,9 @@ const startFalling = () => {
     let isItAble = calculateNextStep();
 
     if (isItAble) {
-      currentElement.position = currentElement.position.map(x => x + 10);
+      if (!configs.debug) {
+        currentElement.position = currentElement.position.map(x => x + 10);
+      }
       renderElement();
     } else {
       // Clear the interval, reset the currentElement object and start to drop the next tile
@@ -67,7 +77,7 @@ const startFalling = () => {
         $(".block").removeClass("tetrominoActive");
       })
 
-      // Start the dropping action
+      // Create a new one;
       dropTile();
     }
   }, configs.tileSpeed);

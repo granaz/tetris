@@ -1,7 +1,7 @@
-'use strict'
 /**
  * Main File for JS
  */
+'use strict'
 
 const keyLeft = 37;
 const keyRight = 39;
@@ -23,6 +23,7 @@ const configs = {
   level: 1,
   points: 0,
   tileSpeed: 250,
+  debug: false
 }
 
 const startGame = () => {
